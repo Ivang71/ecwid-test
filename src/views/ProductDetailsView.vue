@@ -1,39 +1,48 @@
 <template>
-    <div v-if="product">
-      <h2>{{ product.name }}</h2>
-      <img :src="product.imageUrl" alt="">
-      <p>{{ product.description }}</p>
-      <p>Price: {{ product.price.text }}</p>
-      <button @click="addToCart">Buy</button>
+    <div v-if="product" class="flex flex-col lg:flex-row lg:gap-16 items-center py-16 px-8">
+        <div class="w-full lg:w-1/2 flex justify-center items-center">
+            <img :src="product.imageUrl" alt="" class="shadow-lg rounded-lg object-cover h-96 w-96 lg:h-auto lg:w-auto">
+        </div>
+        <div class="w-full lg:w-1/2 px-4 lg:px-0">
+            <h2 class="text-3xl font-bold tracking-wide">{{ product.name }}</h2>
+            <div v-html="product.description" class="text-gray-700 mt-4 mb-8 leading-loose"></div>
+            <div class="text-center font-semibold">
+                {{ product.defaultDisplayedPriceFormatted }}
+            </div>
+            <button @click="addToCart"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-sm mt-8">
+                Buy Now
+            </button>
+        </div>
     </div>
     <div v-else>
-      Loading product details...
+        Loading product details...
     </div>
-  </template>
-  
-  <script>
-  import { getProductDetails, addToCart } from '@/services/ecwid.service';
-  
-  export default {
+</template>
+
+
+<script>
+import { getProductDetails, addToCart } from '@/services/ecwid.service'
+
+export default {
     data() {
-      return {
-        productId: this.$route.params.id,
-        product: null,
-      };
+        return {
+            productId: this.$route.params.id,
+            product: null,
+        }
     },
     created() {
-      this.fetchProductDetails();
+        this.fetchProductDetails()
     },
     methods: {
-      async fetchProductDetails() {
-        const product = await getProductDetails(this.productId);
-        this.product = product;
-      },
-      addToCart() {
-        addToCart(this.product);
-        this.$router.push('/cart');
-      },
+        async fetchProductDetails() {
+            const product = await getProductDetails(this.productId)
+            this.product = product
+        },
+        addToCart() {
+            addToCart(this.product)
+            this.$router.push('/cart')
+        },
     },
-  };
-  </script>
-  
+}
+</script>
