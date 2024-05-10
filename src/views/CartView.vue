@@ -64,7 +64,7 @@ export default defineComponent({
 
             // Display success message
             Swal.fire({
-                title: 'Success!',
+                title: 'Congratulations!',
                 text: 'Your order has been placed.',
                 icon: 'success',
                 confirmButtonColor: '#3085d6',
