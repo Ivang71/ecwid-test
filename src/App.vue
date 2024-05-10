@@ -11,4 +11,9 @@
 
 <script setup>
 import navbar from '@/components/Navbar.vue'
+import { onMounted } from "vue"
+
+onMounted(() => {
+    document.title = "Ecwid Store"
+})
 </script>

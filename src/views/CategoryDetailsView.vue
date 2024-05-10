@@ -43,6 +43,7 @@ export default {
                 getCategoryInfo(this.categoryId),
                 getProductsByCategory(this.categoryId)
             ])
+            document.title = this.category.seoTitle
         }
     },
     methods: {
@@ -52,7 +53,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-/* Add your specific styles for the category details view here */
-</style>

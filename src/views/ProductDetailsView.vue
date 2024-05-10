@@ -22,35 +22,45 @@
 
 
 <script lang="ts">
-import { defineComponent, computed, ref} from "vue";
+import { defineComponent, onMounted, ref, watch, nextTick } from "vue";
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 import { getProductDetails } from '@/data/ecwid.service'
 
 
 export default defineComponent({
-  setup() {
-    const store = useStore();
-    const router = useRouter();
-    const route = useRoute();
-    
-    const productId = ref(route.params.id);
-    const product = ref(null);
+    setup() {
+        const store = useStore()
+        const router = useRouter()
+        const route = useRoute()
 
-    const fetchProductDetails = async () => {
-      const response = await getProductDetails(productId.value);
-      product.value = response;
-    };
+        const productId = ref(route.params.id)
+        const product = ref(null)
 
-    const addToCart = () => {
-      store.dispatch("addProductToCart", product.value);
-      router.push('/cart');
-    };
+        const fetchProductDetails = async () => {
+            const response = await getProductDetails(productId.value)
+            product.value = response
+        }
 
-    return { productId, product, addToCart, fetchProductDetails };
-  },
-  created() {
-    this.fetchProductDetails();
-  },
-});
+        const addToCart = () => {
+            store.dispatch("addProductToCart", product.value)
+            router.push('/cart')
+        }
+
+        watch(product, (newValue) => {
+            if (newValue) {
+                nextTick(() => {
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
+                    document.title = newValue.name
+                })
+            }
+        })
+
+        return { productId, product, addToCart, fetchProductDetails }
+    },
+    created() {
+        this.fetchProductDetails()
+    },
+})
 </script>
