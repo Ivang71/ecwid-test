@@ -6,7 +6,7 @@
         <div class="w-full lg:w-1/2 px-4 lg:px-0">
             <h2 class="text-3xl font-bold tracking-wide">{{ product.name }}</h2>
             <div v-html="product.description" class="text-gray-700 mt-4 mb-8 leading-loose"></div>
-            <div class="text-center font-semibold">
+            <div class="font-semibold">
                 {{ product.defaultDisplayedPriceFormatted }}
             </div>
             <button @click="addToCart"
@@ -21,28 +21,36 @@
 </template>
 
 
-<script>
-import { getProductDetails, addToCart } from '@/services/ecwid.service'
+<script lang="ts">
+import { defineComponent, computed, ref} from "vue";
+import { useStore } from 'vuex';
+import { useRoute, useRouter } from 'vue-router';
+import { getProductDetails } from '@/data/ecwid.service'
 
-export default {
-    data() {
-        return {
-            productId: this.$route.params.id,
-            product: null,
-        }
-    },
-    created() {
-        this.fetchProductDetails()
-    },
-    methods: {
-        async fetchProductDetails() {
-            const product = await getProductDetails(this.productId)
-            this.product = product
-        },
-        addToCart() {
-            addToCart(this.product)
-            this.$router.push('/cart')
-        },
-    },
-}
+
+export default defineComponent({
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+    const route = useRoute();
+    
+    const productId = ref(route.params.id);
+    const product = ref(null);
+
+    const fetchProductDetails = async () => {
+      const response = await getProductDetails(productId.value);
+      product.value = response;
+    };
+
+    const addToCart = () => {
+      store.dispatch("addProductToCart", product.value);
+      router.push('/cart');
+    };
+
+    return { productId, product, addToCart, fetchProductDetails };
+  },
+  created() {
+    this.fetchProductDetails();
+  },
+});
 </script>
