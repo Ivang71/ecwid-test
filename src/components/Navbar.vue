@@ -24,19 +24,9 @@ export default {
             cartItemCount: getCartItems().length,
         }
     },
-    mounted() {
-        this.updateCartItemCount();
-        this.$root.$on('cartUpdated', this.updateCartItemCount); // Listen for the event
-    },
-    beforeUnmount() {
-        this.$root.$off('cartUpdated', this.updateCartItemCount); // Remove the listener
-    },
     methods: {
         openCart() {
             this.$router.push('/cart')
-        },
-        updateCartItemCount() {
-            this.cartItemCount = getCartItems().length; // Update cart items count
         },
     },
 };
