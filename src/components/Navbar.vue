@@ -6,7 +6,7 @@
         </div>
         <div class="flex items-center">
             <span v-if="cartItemCount > 0"
-                class="text-xs font-bold ml-1 bg-red-500 text-white rounded-full px-1 py-0.5">{{ cartItemCount }}
+                class="font-bold ml-1 bg-blue-500 text-white rounded-full px-1 py-0.5">{{ cartItemCount }}
             </span>
             <button @click="openCart"
                 class="flex items-center px-2 py-1 rounded-md hover:bg-gray-600 focus:outline-none">
