@@ -33,32 +33,48 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue"
-import { useStore } from 'vuex'
+import { defineComponent, computed } from "vue";
+import { useStore } from 'vuex';
+import confetti from 'canvas-confetti';
+import Swal from 'sweetalert2';
 
 export default defineComponent({
     setup() {
-        const store = useStore()
+        const store = useStore();
 
-        const cartItems = computed(() => store.getters.cartItems)
-
-        const addProductToCart = (product: any) => {
-            store.dispatch("addProductToCart", product)
-        }
+        const cartItems = computed(() => store.getters.cartItems);
 
         const removeProductFromCart = (productId: number) => {
-            store.dispatch("removeProductFromCart", productId)
-        }
-
-        const clearCartItems = () => {
-            store.dispatch("clearCartItems")
-        }
+            store.dispatch("removeProductFromCart", productId);
+        };
 
         const totalPrice = computed(() => {
-            return cartItems.value.reduce((sum: number, item: any) => sum + item.price, 0)
-        })
+            return cartItems.value.reduce((sum: number, item: any) => sum + item.price, 0);
+        });
+        
+        const placeOrder = () => {
+            // Launch confetti!
+            confetti({
+                zIndex: 9999,
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+            
+            // Display success message
+            Swal.fire({
+                title: 'Success!',
+                text: 'Your order has been placed.',
+                icon: 'success',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Awesome!'
+            });
+            
+            // You might want to clear the cart after placing the order
+            // store.dispatch("clearCartItems");
+        };
 
-        return { cartItems, addProductToCart, removeProductFromCart, clearCartItems, totalPrice }
+        return { cartItems, removeProductFromCart, totalPrice, placeOrder };
     },
-})
+});
 </script>
