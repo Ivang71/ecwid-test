@@ -11,7 +11,7 @@
             </div>
             <button @click="addToCart"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-sm mt-8">
-                Buy Now
+                Buy
             </button>
         </div>
     </div>
