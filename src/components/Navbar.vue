@@ -2,7 +2,7 @@
     <nav
         class="navbar absolute left-0 top-0 right-0 flex items-center justify-between px-4 py-2 bg-gray-500 text-white">
         <div class="flex items-center">
-            <router-link to="/" class="text-xl font-bold">Ecwid Store</router-link>
+            <router-link to="/" class="text-xl font-bold no-drag">Ecwid Store</router-link>
         </div>
         <div class="flex items-center">
             <span v-if="cartItemCount > 0"

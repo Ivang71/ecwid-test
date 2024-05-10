@@ -5,9 +5,7 @@
             <ul class="bg-white rounded-lg shadow-lg p-6 divide-y divide-gray-200">
                 <li v-for="item in cartItems" :key="item.id" class="flex justify-between items-center py-3">
                     <span class="flex-1 font-medium text-gray-600">{{ item.name }}</span>
-                    <!-- Flex item for price -->
                     <span class="flex-1 font-medium text-gray-600 text-center">{{ item.price }}₽</span>
-                    <!-- Flex item for delete button -->
                     <span class="flex-1 text-right">
                         <button @click="removeProductFromCart(item.id)"
                             class="text-sm bg-black hover:bg-gray-700 text-white py-2 px-3 rounded focus:outline-none focus:shadow-outline">
