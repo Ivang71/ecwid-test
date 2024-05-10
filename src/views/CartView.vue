@@ -4,7 +4,10 @@
         <div v-if="cartItems.length > 0">
             <ul class="bg-white rounded-lg shadow-lg p-6 divide-y divide-gray-200">
                 <li v-for="item in cartItems" :key="item.id" class="flex justify-between items-center py-3">
-                    <span class="flex-1 font-medium text-gray-600">{{ item.name }}</span>
+                    <div class="flex-1 flex items-center">
+                        <img v-bind:src="item.smallThumbnailUrl" alt="product thumbnail" class="w-12 h-12 mr-4">
+                        <router-link :to="`/product/${item.id}`" class="font-medium text-gray-600 hover:text-gray-800">{{ item.name }}</router-link>
+                    </div>
                     <span class="flex-1 font-medium text-gray-600 text-center">{{ item.price }}₽</span>
                     <span class="flex-1 text-right">
                         <button @click="removeProductFromCart(item.id)"
@@ -16,7 +19,7 @@
                 <li class="pt-3 flex justify-between items-center font-bold text-gray-800">
                     <span class="flex-1">Total:</span>
                     <span class="flex-1 text-center">{{ totalPrice }}₽</span>
-                    <span class="flex-1"></span> <!-- Keep an empty span for aligning the layout -->
+                    <span class="flex-1"></span>
                 </li>
             </ul>
             <button @click="placeOrder"
